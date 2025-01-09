@@ -1,39 +1,97 @@
 
-# Project XYZ
+# Project CareLens
 
-**Project XYZ** is a comprehensive data analysis tool designed to streamline data exploration, analysis, and visualisation. The tool supports multiple data formats and provides an intuitive interface for both novice and expert data scientists.
+**Project CareLens** is a project that applies visualisation techniques to analyse health related data and extract trends.
 
 # ![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
 
 
 ## Dataset Content
-* Describe your dataset. Choose a dataset of reasonable size to avoid exceeding the repository's maximum size of 100Gb.
+A dataset that is not overly large has been crated for consideration (approximately 1300 rows and 7 columns). Basic information regarding healthcare and how varibales such as perosnal characteristics and geographical location affect these expenses is inlcuded in the dataset. Key Columns include: 
+* Age: Age of the insured 
+* Gender: Gender of the insured (male or female)
+* BMI: Body Mass Index indicating body fat 
+* Children: Number of dependents 
+* Smoker: Whether person smokes or not (yes or no)
+* Region: Area where the insured is 
+* Charges: Expenses that are incurred by healthcare insurance 
 
 
 ## Business Requirements
-* Describe your business requirements
+Objectives:
+ * Grasp the effects of perosnal and geographical aspects on the payment for helathcare insrnace 
+ * Formulate managing models that aid in healthcare expense prediction 
+
+ Requirements:  
+ * Examine how age, gender, BMI, smoking, family size and the region affect the cost 
+ * Provide visual aids that showcase trend patterns 
+ * Formulate models that reflect the expected cost of insurnace in relation to personal traits 
 
 
-## Hypothesis and how to validate?
-* List here your project hypothesis(es) and how you envision validating it (them) 
+## Hypothesis and Validation 
+Hypothesis: 
+1. The smoking status distinctly affects the amount charged for a healthcare insurance 
+2. There are regional differences in the amount of the payment for healthcare services, some of which have higher payments 
+3. Healthcare insurance costs can be reliably forcasted using Age and BMI as variables 
+
+Validation: 
+* Use regression models to test predictions for healthcare charges based on these factors
+
 
 ## Project Plan
-* Outline the high-level steps taken for the analysis.
-* How was the data managed throughout the collection, processing, analysis and interpretation steps?
-* Why did you choose the research methodologies you used?
+Steps: 
+1. Data Collection: 
+   * The dataset can be obtained from a CSV file from kaggle https://www.kaggle.com/datasets/willianoliveiragibin/healthcare-insurance/data 
 
-## The rationale to map the business requirements to the Data Visualisations
-* List your business requirements and a rationale to map them to the Data Visualisations
+2. Data Processing: 
+   * Remove outliers and clean data by taking care of missing data 
+   * Encode the relevent features including 'gender', 'smoker'and 'region' 
+   * Create more features such as BMI categories and age groups
 
-## Analysis techniques used
-* List the data analysis methods used and explain limitations or alternative approaches.
-* How did you structure the data analysis techniques. Justify your response.
-* Did the data limit you, and did you use an alternative approach to meet these challenges?
-* How did you use generative AI tools to help with ideation, design thinking and code optimisation?
+3. Data Analysis 
+   * Conduct descriptive statistics to analyse important metrics such as average charges by gender, region, etc...
+   
+4. Predictive Modeling: 
+   * Use the key features to develop models that can accurately predict healthcare costs 
+
+5. Visualisation:
+   * Include visual representation for correlations, trends and how different features affcet the charges 
+
+## Business Requirements and Visualisation Rationale
+Business Requirements: 
+ 1. Impact of Region: Visualise charges across regions 
+ 2. Effect of Smoking: Show how smoking increases healthcare costs 
+ 3. Predictive Analysis: Visualise how predictions are made for healthcare charges
+
+Rationale: 
+Every business will be represented by the visual equivalent: 
+ 1. Impact of Region: Heatmap or Bar chart showing average charges by region
+ 2. Effect of Smoking: Box Plot or bar chart of comparison between smoking and non-smoking insurnace cost 
+ 3. Predictive Analysis: Scatter plot indicating the accuracy of the prediction 
+
+## Analysis Techniques Used
+Methods:
+ 1. Descriptive Analysis: Mean, median, and variance of charges depending on each attribute (age, gender, region)
+ 2. Correlation Analysis: Pearson correlation to find relationships between features and charges.
+ 3. Regression Model:Linear regression and decision trees to predict charges 
+
+Limitation: 
+ * Small sample size may restrict the capacity of prediction generalisation 
+ * Data quality problems,e.g., missing values, may have an impact when tackling model accuracies 
+
+Alternative Approaches: 
+ * Employ more sophifiscated models 
+
+Generative AI Tools: 
+ * AI tools helped exploit opportunities in code optimisation and visualising concept 
+
 
 ## Ethical considerations
-* Were there any data privacy, bias or fairness issues with the data?
-* How did you overcome any legal or societal issues?
+ * Data Privacy: Nonsensitive personal data is not present in the dataset but ethical considerations were taken into account regarding the anonymizing of any ground-truth data
+ * Bias and Fairness: Made sure that the analysis did not discriminate among genders or regions in favour of any. Bias was avoided by providing an equal respresentation of all the categories in the dataset
+
+Legal/Societal issues: 
+ * The dataset was obtained from Kaggle, therefore properly anonymised and handled 
 
 ## Dashboard Design
 * List all dashboard pages and their content, either blocks of information or widgets, like buttons, checkboxes, images, or any other item that your dashboard library supports.

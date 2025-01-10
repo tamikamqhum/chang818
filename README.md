@@ -19,7 +19,7 @@ A dataset that is not overly large has been crated for consideration (approximat
 
 ## Business Requirements
 Objectives:
- * Grasp the effects of perosnal and geographical aspects on the payment for helathcare insrnace 
+ * Grasp the effects of perosnal and geographical aspects on the payment for healthcare insurance
  * Formulate managing models that aid in healthcare expense prediction 
 
  Requirements:  
@@ -93,57 +93,35 @@ Generative AI Tools:
 Legal/Societal issues: 
  * The dataset was obtained from Kaggle, therefore properly anonymised and handled 
 
-## Dashboard Design
-* List all dashboard pages and their content, either blocks of information or widgets, like buttons, checkboxes, images, or any other item that your dashboard library supports.
-* Later, during the project development, you may revisit your dashboard plan to update a given feature (for example, at the beginning of the project you were confident you would use a given plot to display an insight but subsequently you used another plot type).
-* How were data insights communicated to technical and non-technical audiences?
-* Explain how the dashboard was designed to communicate complex data insights to different audiences. 
+## Conclusion
+In conclusion, this project revealed several important insights about healthcare costs. Smokers incur significantly higher healthcare expenses compared to non-smokers, largely due to smoking-related health issues such as cardiovascular diseases, respiratory conditions, and cancer. Reducing smoking rates through various programmes could substantially lower healthcare costs for individuals and insurers alike.
 
-## Unfixed Bugs
-* Please mention unfixed bugs and why they were not fixed. This section should include shortcomings of the frameworks or technologies used. Although time can be a significant variable to consider, paucity of time and difficulty understanding implementation are not valid reasons to leave bugs unfixed.
-* Did you recognise gaps in your knowledge, and how did you address them?
-* If applicable, include evidence of feedback received (from peers or instructors) and how it improved your approach or understanding.
+Regional differences in healthcare costs are evident, with regions like the Northeast experiencing higher charges compared to the Southwest. These variations may be influenced by factors such as healthcare access, income levels, and differing health risk profiles. Addressing these disparities requires a closer look at regional healthcare policies and demographics, with a focus on allocating resources to high-cost regions.
 
-## Development Roadmap
-* What challenges did you face, and what strategies were used to overcome these challenges?
-* What new skills or tools do you plan to learn next based on your project experience? 
+The analysis also showed that healthcare costs increase with age and BMI. Older individuals and those with higher BMI values face higher healthcare expenses due to age-related health issues and conditions such as diabetes and hypertension. Promoting preventive care and wellness programmes targeted at these populations could help reduce long-term healthcare costs.
 
-## Deployment
-### Heroku
+Lastly, the impact of children and gender on healthcare costs was found to be minimal. The number of children in a family and gender do not significantly affect individual healthcare expenses compared to factors like smoking, region, age, and BMI.
 
-* The App live link is: https://YOUR_APP_NAME.herokuapp.com/ 
-* Set the runtime.txt Python version to a [Heroku-20](https://devcenter.heroku.com/articles/python-support#supported-runtimes) stack currently supported version.
-* The project was deployed to Heroku using the following steps.
+Overall, the visualisations, including heatmaps, boxplots, and scatter plots, effectively highlighted these findings and provided a clear understanding of the factors influencing healthcare costs. These insights can inform policies and initiatives aimed at managing and reducing healthcare expenses.
 
-1. Log in to Heroku and create an App
-2. From the Deploy tab, select GitHub as the deployment method.
-3. Select your repository name and click Search. Once it is found, click Connect.
-4. Select the branch you want to deploy, then click Deploy Branch.
-5. The deployment process should happen smoothly if all deployment files are fully functional. Click now the button Open App on the top of the page to access your App.
-6. If the slug size is too large then add large files not required for the app to the .slugignore file.
+## Development Roadmap/ Unfixed Bugs
+Throughout this project, I faced several challenges. Understanding and cleaning the dataset was a significant hurdle, particularly when dealing with missing data and errors such as KeyError. Transforming data into meaningful features, like creating BMI categories and age groups, required careful consideration. Selecting appropriate visualisations to gain insights and predicting healthcare costs while evaluating models effectively also presented challenges. To tackle these issues, I adopted an incremental problem-solving approach, breaking down problems step-by-step. I leveraged powerful tools like Pandas, Seaborn, and Scikit-learn, continuously refining my processes for better accuracy and clarity. Along the way, I engaged in ongoing research and learning to address unfamiliar challenges.
 
+During this journey, I acquired several new skills and learned how to use various tools. I became proficient in data manipulation using Pandas, mastering techniques like groupby and apply. I also learned how to create effective visualisations with Seaborn and Matplotlib. I improved my debugging and error-handling skills to ensure smoother workflows.
+
+Looking ahead, I plan to explore advanced machine learning models and further delve into feature engineering. I aim to automate my analysis workflows by creating reusable code and to experiment with interactive visualisations using tools like Plotly. Finally, I intend to handle larger datasets by utilising scalable tools. These future plans will help me build on the knowledge and skills I have gained during this project and continue to develop my expertise in data analysis and visualisation.
 
 ## Main Data Analysis Libraries
-* Here you should list the libraries you used in the project and provide an example(s) of how you used these libraries.
-
+* Pandas - Data Manipulation and Analysis (e.g. Loading the dataset and Descriptive statistics)
+* Seaborn - Data Visualisation (e.g. Boxplot and Heatmap)
+* Matplotlib - Plotting and visualisation used alongside Seaborn (e.g. Scatter plot for predictions)
 
 ## Credits 
 
-* In this section, you need to reference where you got your content, media and extra help from. It is common practice to use code from other repositories and tutorials, however, it is important to be very specific about these sources to avoid plagiarism. 
-* You can break the credits section up into Content and Media, depending on what you have included in your project. 
-
-### Content 
-
-- The text for the Home page was taken from Wikipedia Article A
-- Instructions on how to implement form validation on the Sign-Up page was taken from [Specific YouTube Tutorial](https://www.youtube.com/)
-- The icons in the footer were taken from [Font Awesome](https://fontawesome.com/)
-
-### Media
-
-- The photos used on the home and sign-up page are from This Open-Source site
-- The images used for the gallery page were taken from this other open-source site
-
+1. With a little help from OpenAI's ChatGPT, the Python code for this project’s data visualizations—featuring heatmaps, box plots, and scatter plots—came to life. The project taps into widely-used libraries like pandas, seaborn, and matplotlib to break down and illustrate healthcare insurance data effectively.
+2. Code Institute - LMS https://learn.codeinstitute.net/ci_program/daai_2 for indepth explanation for things i did not understand
+3. https://github.com/adam-p/markdown-here/wiki/markdown-cheatsheet To structure my Notebook 
 
 
 ## Acknowledgements (optional)
-* Thank the people who provided support through this project.
+* Thank you to Vasi Pavaloi and Neil McEwen for their guidance and pateince throughout the Hackathon

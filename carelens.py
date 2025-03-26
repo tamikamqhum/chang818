@@ -11,7 +11,7 @@ import numpy as np
 primaryColor = "#3498DB"
 backgroundColor = "#F8F9FA"
 secondaryBackgroundColor = "#EAEDED"
-textColor = "#2C3E50"
+textColor = "#0e0e0e"
 
 st.set_page_config(page_title="CareLens Dashboard", page_icon="🏥", layout="wide")
 
@@ -38,7 +38,8 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # Load Dataset
-df = pd.read_csv("C:\Users\tmqhu\Documents\chang818\health_insurance.csv")
+df = pd.read_csv("C:\\Users\\tmqhu\\Documents\\chang818\\health_insurance.csv")
+
 
 # Function for predictive modelling
 def estimate_insurance_cost(age, bmi, region, smoker_status):

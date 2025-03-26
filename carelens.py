@@ -2,10 +2,12 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LinearRegression, Ridge, Lasso
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error
 import numpy as np
+import plotly.express as px
 
 # Set the custom theme
 primaryColor="#3498db"
@@ -40,31 +42,99 @@ st.markdown(f"""
 # Load Dataset
 df = pd.read_csv("C:\\Users\\tmqhu\\Documents\\chang818\\health_insurance.csv")
 
-# Data Preprocessing
+# Data Preprocessing: Add region_code and smoker_code
 df['region_code'] = df['region'].map({'southeast': 0, 'southwest': 1, 'northeast': 2, 'northwest': 3})
 df['smoker_code'] = df['smoker'].map({'yes': 1, 'no': 0})
 
 # Function for predictive modelling
-def estimate_insurance_cost(age, bmi, region, smoker_status):
+def estimate_insurance_cost(age, bmi, region, smoker_status, model):
     region_map = {"northeast": 0, "northwest": 1, "southeast": 2, "southwest": 3}
     smoker_map = {"yes": 1, "no": 0}
     
-    # Train a simple model
+    # Prepare input data for prediction
+    input_data = pd.DataFrame({
+        'age': [age],
+        'bmi': [bmi],
+        'region_code': [region_map.get(region, 0)],
+        'smoker_code': [smoker_map.get(smoker_status, 0)]
+    })
+    
+    predicted_cost = model.predict(input_data)
+    return predicted_cost[0]
+
+# Model Evaluation Function
+def evaluate_model(model, X_test, y_test):
+    y_pred = model.predict(X_test)
+    mse = mean_absolute_error(y_test, y_pred)
+    return mse
+
+# Interactive Visualization using Plotly
+def interactive_visualization():
+    st.title("Interactive Visualization 📊")
+    fig = px.scatter(df, x="age", y="charges", color="smoker", hover_data=["region", "bmi"], title="Age vs Insurance Charges")
+    st.plotly_chart(fig)
+
+# Predictive Modelling Section
+def predictive_modelling():
+    st.title("Predictive Modelling 🔮")
+    st.write("Estimate the insurance cost based on inputs below.")
+
+    # Model Selection
+    model_type = st.radio("Choose a model", ["Linear Regression", "Ridge", "Lasso", "Random Forest"])
+
+    # Train the selected model
     X = df[['age', 'bmi', 'region_code', 'smoker_code']]
     y = df['charges']
     
-    model = LinearRegression()
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+    if model_type == "Linear Regression":
+        model = LinearRegression()
+    elif model_type == "Ridge":
+        model = Ridge()
+    elif model_type == "Lasso":
+        model = Lasso()
+    else:
+        model = RandomForestRegressor()
+
     model.fit(X_train, y_train)
     
-    input_data = np.array([age, bmi, region_map.get(region, 0), smoker_map.get(smoker_status, 0)]).reshape(1, -1)
-    predicted_cost = model.predict(input_data)
-    return predicted_cost[0]
+    # Display model evaluation metrics
+    mse = evaluate_model(model, X_test, y_test)
+    st.write(f"Mean Squared Error: {mse:.2f}")
+    
+    # User Inputs for Prediction
+    age_input = st.number_input("Enter Age", min_value=18, max_value=100, value=25)
+    bmi_input = st.number_input("Enter BMI", min_value=10, max_value=50, value=25.0)
+    region_input = st.selectbox("Select Region", ["northeast", "northwest", "southeast", "southwest"])
+    smoker_input = st.selectbox("Smoker Status", ["yes", "no"])
+
+    # Predict Insurance Cost
+    predicted_cost = estimate_insurance_cost(age_input, bmi_input, region_input, smoker_input, model)
+    st.write(f"Predicted Insurance Cost: ${predicted_cost:.2f}")
+
+    # Display Prediction Breakdown
+    region_map = {"northeast": 0, "northwest": 1, "southeast": 2, "southwest": 3}
+    smoker_map = {"yes": 1, "no": 0}
+
+    age_contribution = model.coef_[0] * age_input
+    bmi_contribution = model.coef_[1] * bmi_input
+    region_contribution = model.coef_[2] * region_map.get(region_input, 0)
+    smoker_contribution = model.coef_[3] * smoker_map.get(smoker_input, 0)
+    
+    total_contribution = age_contribution + bmi_contribution + region_contribution + smoker_contribution
+    
+    st.write(f"### Prediction Breakdown")
+    st.write(f"- Age Contribution: {age_contribution:.2f}")
+    st.write(f"- BMI Contribution: {bmi_contribution:.2f}")
+    st.write(f"- Region Contribution: {region_contribution:.2f}")
+    st.write(f"- Smoker Contribution: {smoker_contribution:.2f}")
+    st.write(f"- **Total Predicted Insurance Cost: ${total_contribution:.2f}**")
 
 # Homepage section
 def homepage():
     st.title("Welcome to the CareLens Insurance Dashboard 🚑")
-    st.write(""" 
+    st.write("""
     ## Overview of Insurance Trends
     - The insurance costs are largely impacted by factors such as age, BMI, smoking status, and region.
     - Our analysis reveals that smokers tend to pay significantly higher premiums.
@@ -88,38 +158,6 @@ def data_exploration():
     
     st.write(filtered_data)
 
-# Visual Analysis Section
-def visual_analysis():
-    st.title("Visual Analysis 📊")
-    
-    # Plotting relationships
-    fig, ax = plt.subplots(figsize=(10, 6))
-    sns.scatterplot(data=df, x="age", y="charges", hue="smoker", palette="coolwarm", ax=ax)
-    ax.set_title("Age vs Insurance Charges (Smoker vs Non-Smoker)")
-    st.pyplot(fig)
-
-    fig, ax = plt.subplots(figsize=(10, 6))
-    sns.boxplot(data=df, x="region", y="charges", ax=ax, palette="Set3")
-    ax.set_title("Insurance Charges by Region")
-    st.pyplot(fig)
-
-# Predictive Modelling Section
-def predictive_modelling():
-    st.title("Predictive Modelling 🔮")
-    st.write("Estimate the insurance cost based on inputs below.")
-    
-    # Collecting user inputs for predictive modeling
-    age_input = st.slider("Age", min_value=18, max_value=100, value=30)
-    bmi_input = st.number_input("BMI", min_value=10.0, max_value=50.0, value=22.5)
-    region_input = st.selectbox("Region", options=["southeast", "southwest", "northeast", "northwest"])
-    smoker_input = st.radio("Smoker", options=["yes", "no"])
-    
-    # If the user presses the "Estimate" button
-    if st.button("Estimate Insurance Cost"):
-        predicted_cost = estimate_insurance_cost(age_input, bmi_input, region_input, smoker_input)
-        
-        st.write(f"Estimated Insurance Cost: ${predicted_cost:.2f}")
-
 # Download Reports Section
 def download_reports():
     st.title("Download Reports 📥")
@@ -131,8 +169,6 @@ def download_reports():
         st.download_button(label="Download CSV", data=csv, file_name="insurance_data.csv", mime="text/csv")
     
     elif report_format == "PDF":
-        # You could use a PDF generation library like FPDF to generate a custom PDF report
-        # For simplicity, this is just a placeholder for now.
         st.write("PDF report generation coming soon!")
 
 # Main app routing
@@ -145,7 +181,7 @@ def main():
     elif selection == "Data Exploration":
         data_exploration()
     elif selection == "Visual Analysis":
-        visual_analysis()
+        interactive_visualization()
     elif selection == "Predictive Modelling":
         predictive_modelling()
     elif selection == "Download Reports":

@@ -8,10 +8,11 @@ from sklearn.metrics import mean_absolute_error
 import numpy as np
 
 # Set the custom theme
-primaryColor = "#3498DB"
-backgroundColor = "#F8F9FA"
-secondaryBackgroundColor = "#EAEDED"
-textColor = "#0e0e0e"
+primaryColor="#3498db"
+backgroundColor="#f8f9fa"
+secondaryBackgroundColor="#66b5b5"
+textColor="#0e0e0e"
+
 
 st.set_page_config(page_title="CareLens Dashboard", page_icon="🏥", layout="wide")
 
@@ -67,7 +68,7 @@ def homepage():
     - Our analysis reveals that smokers tend to pay significantly higher premiums.
     - Geographically, residents in the Southeast region tend to have higher premiums.
     """)
-    st.image("insurance_trends.png", caption="Insurance Trends Visualization")
+    st.image("insurance_trends.jpg", caption="Insurance Trends Visualization")
 
 # Data Exploration Section
 def data_exploration():

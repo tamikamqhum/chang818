@@ -13,7 +13,6 @@ backgroundColor="#f8f9fa"
 secondaryBackgroundColor="#66b5b5"
 textColor="#0e0e0e"
 
-
 st.set_page_config(page_title="CareLens Dashboard", page_icon="🏥", layout="wide")
 
 # Custom CSS to style the page
@@ -41,6 +40,9 @@ st.markdown(f"""
 # Load Dataset
 df = pd.read_csv("C:\\Users\\tmqhu\\Documents\\chang818\\health_insurance.csv")
 
+# Data Preprocessing
+df['region_code'] = df['region'].map({'southeast': 0, 'southwest': 1, 'northeast': 2, 'northwest': 3})
+df['smoker_code'] = df['smoker'].map({'yes': 1, 'no': 0})
 
 # Function for predictive modelling
 def estimate_insurance_cost(age, bmi, region, smoker_status):
@@ -62,7 +64,7 @@ def estimate_insurance_cost(age, bmi, region, smoker_status):
 # Homepage section
 def homepage():
     st.title("Welcome to the CareLens Insurance Dashboard 🚑")
-    st.write("""
+    st.write(""" 
     ## Overview of Insurance Trends
     - The insurance costs are largely impacted by factors such as age, BMI, smoking status, and region.
     - Our analysis reveals that smokers tend to pay significantly higher premiums.
@@ -80,8 +82,8 @@ def data_exploration():
     region_filter = st.selectbox("Region", df["region"].unique())
     smoker_filter = st.selectbox("Smoker Status", ["yes", "no"])
     
-    filtered_data = df[(df['age'] >= age_filter[0]) & (df['age'] <= age_filter[1]) &
-                       (df['bmi'] >= bmi_filter[0]) & (df['bmi'] <= bmi_filter[1]) &
+    filtered_data = df[(df['age'] >= age_filter[0]) & (df['age'] <= age_filter[1]) & 
+                       (df['bmi'] >= bmi_filter[0]) & (df['bmi'] <= bmi_filter[1]) & 
                        (df['region'] == region_filter) & (df['smoker'] == smoker_filter)]
     
     st.write(filtered_data)
@@ -106,13 +108,16 @@ def predictive_modelling():
     st.title("Predictive Modelling 🔮")
     st.write("Estimate the insurance cost based on inputs below.")
     
-    age_input = st.number_input("Enter your age:", min_value=18, max_value=100, value=30)
-    bmi_input = st.number_input("Enter your BMI:", min_value=10.0, max_value=50.0, value=25.0)
-    region_input = st.selectbox("Select your region:", df["region"].unique())
-    smoker_input = st.selectbox("Do you smoke?", ["yes", "no"])
+    # Collecting user inputs for predictive modeling
+    age_input = st.slider("Age", min_value=18, max_value=100, value=30)
+    bmi_input = st.number_input("BMI", min_value=10.0, max_value=50.0, value=22.5)
+    region_input = st.selectbox("Region", options=["southeast", "southwest", "northeast", "northwest"])
+    smoker_input = st.radio("Smoker", options=["yes", "no"])
     
-    if st.button("Estimate Cost"):
+    # If the user presses the "Estimate" button
+    if st.button("Estimate Insurance Cost"):
         predicted_cost = estimate_insurance_cost(age_input, bmi_input, region_input, smoker_input)
+        
         st.write(f"Estimated Insurance Cost: ${predicted_cost:.2f}")
 
 # Download Reports Section
